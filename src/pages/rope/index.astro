@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { fibers } from '../../data/ropes';
+---
+
+<BaseLayout
+  title="Shop for Jute, Hemp, and Shibari Bondage Ropes"
+  description="The best quality natural fiber, jute and hemp, ropes for Kinbaku and Shibari rope bondage. We offer a huge selection of natural colored and dyed ropes at excellent prices!"
+>
+  <div id="product_displayII" class="col_w960">
+    <h1>Choose Your Rope</h1>
+
+    <div style="display:flex; flex-wrap:wrap; gap:30px;">
+      {fibers.map(fiber => {
+        const defaultColor = fiber.colors[0];
+        return (
+          <div style="flex:1; min-width:280px; max-width:300px;">
+            <div class="display_product_box" style="margin-bottom:20px;">
+              <h3>{fiber.name}</h3>
+
+              <div class={`product_image_box ${fiber.slug}`}>
+                {fiber.colors.map(color => (
+                  <div class="rope_image_box image-hidden" id={`${fiber.slug}-${color.slug}`} style={{display: color.slug === fiber.colors[0].slug ? 'block' : 'none'}}>
+                    <a href={`/rope/${fiber.slug}/${color.slug}`}>
+                      <img src={`/rope/${fiber.slug}/${color.slug}/img/main.png`} alt={`Buy ${color.name} rope for rope bondage`} style="width:270px; height:300px; border:1px solid #ccc; padding:4px;" />
+                    </a>
+                    <div class="color_name" style="margin-top:5px;">
+                      <p><b>{color.name}</b></p>
+                      <div class="rope_price"><p><b>${fiber.pricePerFoot.toFixed(2)} ft.</b></p></div>
+                    </div>
+                  </div>
+                ))}
+
+                <div class="fiber_desc" style="margin:10px 0;">
+                  <b>{fiber.name}:</b> {fiber.fiberDescription}
+                </div>
+
+                <div class={`color_swatches ${fiber.slug}_swatches`} style="display:flex; flex-wrap:wrap; gap:5px;">
+                  {fiber.colors.map(color => (
+                    <div class="swatch_box" style="text-align:center; width:70px; font-size:11px; cursor:pointer;">
+                      {color.name}
+                      <div class="swatch" fiber={`.${fiber.slug}`} name={`#${fiber.slug}-${color.slug}`} style={{border: color.slug === fiber.colors[0].slug ? '2px solid #444' : '2px solid transparent', display:'inline-block'}}>
+                        <img src={`/rope/${fiber.slug}/${color.slug}/img/thumbnail.png`} alt={`Thumbnail for ${color.name} rope`} style="width:40px; height:40px;" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.swatch').forEach(function(swatch) {
+      swatch.addEventListener('click', function() {
+        var fiber = this.getAttribute('fiber');
+        var name = this.getAttribute('name');
+        var isActive = this.style.borderColor === 'rgb(68, 68, 68)' || this.style.borderColor === '#444';
+
+        if (isActive) {
+          var href = document.querySelector(name + ' > a').getAttribute('href');
+          window.location.href = href;
+          return;
+        }
+
+        var parentBox = this.closest('.display_product_box');
+        parentBox.querySelectorAll('.swatch').forEach(function(s) {
+          s.style.borderColor = 'transparent';
+        });
+        this.style.borderColor = '#444';
+
+        parentBox.querySelectorAll('.rope_image_box').forEach(function(box) {
+          box.style.display = 'none';
+        });
+        var target = parentBox.querySelector(name);
+        if (target) target.style.display = 'block';
+      });
+    });
+  });
+</script>

@@ -1,0 +1,61 @@
+---
+export interface Props {
+  images: string[];
+  basePath: string;
+  alt: string;
+}
+const { images, basePath, alt } = Astro.props;
+---
+
+<div id="background_image">
+  {
+    images.map((img, i) => (
+      <img
+        src={`${basePath}images/${img}`}
+        id={img.replace(/\.\w+$/, '')}
+        class={i === 0 ? 'image-visible' : 'image-hidden'}
+        alt={alt}
+        height="333" width="500"
+      />
+    ))
+  }
+  <div id="thumbnails">
+    {
+      images.map((img, i) => (
+        <div
+          class={`thumb_image${i === 0 ? ' on' : ''}`}
+          name={`#${img.replace(/\.\w+$/, '')}`}
+          style="display:inline-block; cursor:pointer; margin:2px; border:2px solid transparent;"
+        >
+          <img src={`${basePath}thumbnails/${img}`} alt="Thumbnail" height="50" width="50" />
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var thumbs = document.querySelectorAll('#thumbnails .thumb_image');
+    thumbs.forEach(function(thumb) {
+      thumb.addEventListener('click', function() {
+        var targetId = this.getAttribute('name');
+        document.querySelectorAll('#background_image > img').forEach(function(img) {
+          img.classList.remove('image-visible');
+          img.classList.add('image-hidden');
+        });
+        var target = document.querySelector(targetId);
+        if (target) {
+          target.classList.remove('image-hidden');
+          target.classList.add('image-visible');
+        }
+        document.querySelectorAll('#thumbnails .thumb_image').forEach(function(t) {
+          t.classList.remove('on');
+          t.style.borderColor = 'transparent';
+        });
+        this.classList.add('on');
+        this.style.borderColor = '#444';
+      });
+    });
+  });
+</script>

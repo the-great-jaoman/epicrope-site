@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import KitButtons from '../../components/KitButtons.astro';
+import RopeCustomForm from '../../components/RopeCustomForm.astro';
+
+const title = "Rainbow Jute Bondage Rope - $1.50 per foot";
+const desc = "Beautiful tie-dyed rainbow jute rope for shibari and kinbaku bondage. Hand-dyed for a spectacular multi-color effect.";
+const canonical = "https://epicrope.com/jute/rainbow_rope";
+---
+
+<BaseLayout title={title} description={desc} canonical={canonical}>
+  <Breadcrumbs crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Rainbow Rope', href: '/rainbow_rope' },
+    { label: 'Rainbow Jute', href: '/jute/rainbow_rope' },
+  ]} />
+
+  <div id="buyrope" class="container_16">
+    <h1>Rainbow Jute Bondage Rope - $1.50 per foot</h1>
+
+    <div style="display:flex; flex-wrap:wrap; gap:30px;">
+      <div style="flex:0 0 500px; max-width:100%;">
+        <img src="/rainbow_rope/jute/img/main.png" alt="Rainbow jute rope for rope bondage" style="border:1px solid #ccc; padding:4px; max-width:100%;" />
+      </div>
+
+      <div style="flex:1; min-width:280px;">
+        <KitButtons
+          fiberName="Jute"
+          fiberSlug="jute"
+          colorName="Rainbow"
+          colorSlug="rainbow"
+          pricePerFoot={1.50}
+        />
+
+        <div style="clear:both;"></div>
+
+        <RopeCustomForm
+          fiberName="Jute"
+          fiberSlug="jute"
+          colorName="Rainbow"
+          colorSlug="rainbow"
+          pricePerFoot={1.50}
+          weightPerFoot={0.0080}
+          diameter="6mm"
+        />
+      </div>
+    </div>
+
+    <div style="clear:both;"></div>
+
+    <br /><br />
+
+    <div id="desc_box" class="card" style="margin-top:20px;">
+      <h4>About the rope:</h4>
+      <p><b>Rainbow Jute:</b> Our rainbow tie-dyed jute rope combines the lightweight, glossy qualities of premium jute with a spectacular multi-color effect. Each rope is hand-dyed, making every piece unique.</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline src="/scripts/rope-builder.js"></script>

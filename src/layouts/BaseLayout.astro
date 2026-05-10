@@ -1,0 +1,119 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+const { title, description, canonical } = Astro.props;
+const pageTitle = title ? `${title} | EpicRope` : "Premium Shibari & Kinbaku Bondage Rope, Equipment, and Learning Resources | EpicRope";
+const pageDesc = description || "We sell high quality bondage shibari and kinbaku rope and equipment. Our rope comes in a wide array of colors.";
+const pageCanonical = canonical || site.url;
+
+const gaId = site.gaTrackingId;
+const adsId = site.googleAdsId;
+const saleCode = site.sale.code;
+const saleEnd = site.sale.endDate;
+const bulkCode = site.bulkDiscount.code;
+const bulkThreshold = site.bulkDiscount.threshold;
+const foxDomain = site.foxyCartDomain;
+
+const gaInlineScript = `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${gaId}');
+`;
+const adsInlineScript = `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${adsId}');
+`;
+const foxyInlineScript = `
+var coupon_id = false;
+var FC = FC || {};
+FC.onLoad = function () {
+  var today = new Date();
+  var sale_ends = new Date("${saleEnd}");
+  if (today < sale_ends) {
+    FC.client.on("ready.done", function() {
+      FC.client.request('https://'+FC.settings.storedomain+'/cart?coupon=' + '${saleCode}').done(function() {
+        if (FC.util.hasError('coupon')) FC.util.removeError('coupon');
+      });
+    });
+  } else {
+    FC.client.on("ready.done", addCoupon);
+    FC.client.on("cart-submit.done", addCoupon);
+    FC.client.on("cart-coupon-add.done", addCoupon);
+    FC.client.on("cart-item-quantity-update.done", addCoupon);
+    FC.client.on("cart-item-remove.done", addCoupon);
+  }
+}
+function addCoupon() {
+  var code = "${bulkCode}";
+  var total_price = FC.json.total_item_price;
+  if (code != "" && !FC.json.coupons.hasOwnProperty(code) && total_price > ${bulkThreshold}) {
+    FC.client.request('https://'+FC.settings.storedomain+'/cart?coupon=' + code).done(function() {
+      if (FC.util.hasError('coupon')) FC.util.removeError('coupon');
+      coupon_id = FC.json.coupons["${bulkCode}"].id;
+      FC[FC.json.context].render();
+    });
+  }
+  if (coupon_id && total_price < ${bulkThreshold}) {
+    FC.cart.request({'cart': 'remove_coupon', 'coupon_code_id': coupon_id}).done(function () {
+      coupon_id = false;
+      FC[FC.json.context].render();
+    });
+  }
+}
+`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDesc} />
+  <link rel="canonical" href={pageCanonical} />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+  <script is:inline data-cfasync="false" src="https://cdn.foxycart.com/epicrope/loader.js" async defer></script>
+
+  <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+  <script is:inline set:html={gaInlineScript}></script>
+
+  <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${adsId}`}></script>
+  <script is:inline set:html={adsInlineScript}></script>
+
+  <script is:inline set:html={foxyInlineScript}></script>
+</head>
+<body>
+  <div id="templatemo_wrapper">
+    <div id="templatemo_header">
+      <div id="site_title"><h1><a href="/">Epic Rope</a></h1></div>
+      <div id="header_right"></div>
+      <div class="cleaner"></div>
+    </div>
+
+    <div id="templatemo_menu">
+      <Nav />
+      <div class="cleaner"></div>
+    </div>
+
+    <div id="templatemo_main">
+      <slot />
+      <div class="cleaner"></div>
+    </div>
+
+    <Footer />
+  </div>
+</body>
+</html>

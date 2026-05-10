@@ -1,0 +1,80 @@
+---
+import { kits, type Kit } from '../data/ropes';
+import { site } from '../data/site';
+
+export interface Props {
+  fiberName: string;
+  fiberSlug: string;
+  colorName: string;
+  colorSlug: string;
+  pricePerFoot: number;
+}
+
+const { fiberName, fiberSlug, colorName, colorSlug, pricePerFoot } = Astro.props;
+
+function kitUrl(kit: Kit): string {
+  const base = `https://${site.foxyCartDomain}/cart?`;
+  const imageUrl = `https://${site.url}/rope/${fiberSlug}/${colorSlug}/img/main.png`;
+  const type = `${colorName.toLowerCase()} ${fiberName.toLowerCase()}`;
+  const params = kit.items.map((item, idx) => {
+    const n = idx + 1;
+    const itemPrice = item.uom === 'm' ? pricePerFoot * 3.28 * item.length : pricePerFoot * item.length;
+    const itemWeight = item.uom === 'm' ? 0.0080 * 3.28 * item.length : 0.0080 * item.length;
+    return `${n}:name=${encodeURIComponent(item.length + ' ' + item.uom)}&${n}:category=Kit&${n}:image=${encodeURIComponent(imageUrl)}&${n}:kit=${encodeURIComponent(kit.name)}&${n}:type=${encodeURIComponent(type)}&${n}:price=${itemPrice.toFixed(2)}&${n}:weight=${itemWeight.toFixed(4)}&${n}:length=${item.length}&${n}:quantity=${item.quantity}&${n}:diameter=${item.diameter}`;
+  }).join('&');
+  return base + params + '&';
+}
+---
+
+<fieldset id="add_kits" class="double_border" style="border:1px solid #ccc; padding:15px; margin-bottom:15px;">
+  <legend class="bold title" style="font-weight:bold; padding:0 10px;"><b>Add Kit</b></legend>
+  <div id="button_area">
+    {kits.map(kit => (
+      <div style="display:inline-block; margin:3px;">
+        <a
+          name={`#${kit.slug}`}
+          href={kitUrl(kit)}
+          class="button border"
+          style="display:inline-block; padding:5px 12px; border:1px solid #ccc; background:#f5f5f5; color:#333; font-weight:bold; text-decoration:none; border-radius:4px;"
+        >{kit.name}</a>
+      </div>
+    ))}
+  </div>
+
+  <div id="description_legend" class="italics" style="margin-top:10px; font-style:italic; color:#666;">
+    Description (hover mouse over buttons to see description):
+  </div>
+
+  <div id="kit_desc_area" style="margin-top:10px; min-height:60px;">
+    {kits.map(kit => (
+      <div id={kit.slug} class="invisible" style="display:none;">
+        <div class="description">
+          <p>{kit.description}</p>
+        </div>
+        <div class="bold description_price" style="font-weight:bold; font-size:16px; margin-top:5px;">
+          ${kit.totalPrice}
+        </div>
+      </div>
+    ))}
+  </div>
+</fieldset>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var buttons = document.querySelectorAll('#add_kits .button');
+    var descs = document.querySelectorAll('#kit_desc_area > div');
+    buttons.forEach(function(btn) {
+      btn.addEventListener('mouseenter', function() {
+        descs.forEach(function(d) { d.style.display = 'none'; });
+        var targetId = this.getAttribute('name');
+        if (targetId) {
+          var target = document.querySelector(targetId);
+          if (target) target.style.display = 'block';
+        }
+      });
+      btn.addEventListener('mouseleave', function() {
+        descs.forEach(function(d) { d.style.display = 'none'; });
+      });
+    });
+  });
+</script>

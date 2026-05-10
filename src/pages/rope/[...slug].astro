@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ProductGallery from '../../components/ProductGallery.astro';
+import KitButtons from '../../components/KitButtons.astro';
+import RopeCustomForm from '../../components/RopeCustomForm.astro';
+import { fibers } from '../../data/ropes';
+
+export async function getStaticPaths() {
+  const paths: { params: { slug: string }; props: Record<string, any> }[] = [];
+  for (const fiber of fibers) {
+    for (const color of fiber.colors) {
+      paths.push({
+        params: { slug: `${fiber.slug}/${color.slug}` },
+        props: { fiber, color },
+      });
+    }
+  }
+  return paths;
+}
+
+const { fiber, color } = Astro.props;
+const title = `${color.name} ${fiber.name} Bondage Rope - $${fiber.pricePerFoot} per foot`;
+const desc = `Premium ${color.name.toLowerCase()} ${fiber.name.toLowerCase()} rope for rope bondage shibari practice. Available in custom lengths and dedicated kits.`;
+const imageBasePath = `/rope/${fiber.slug}/${color.slug}/img/`;
+const canonical = `https://epicrope.com/rope/${fiber.slug}/${color.slug}`;
+---
+
+<BaseLayout title={title} description={desc} canonical={canonical}>
+  <Breadcrumbs crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Rope', href: '/rope' },
+    { label: `${color.name} ${fiber.name}`, href: `/rope/${fiber.slug}/${color.slug}` },
+  ]} />
+
+  <div id="buyrope" class="container_16">
+    <h1>{color.name} {fiber.name} Bondage Rope - ${fiber.pricePerFoot} per foot</h1>
+
+    <div style="display:flex; flex-wrap:wrap; gap:30px;">
+      <div style="flex:0 0 500px; max-width:100%;">
+        <ProductGallery
+          images={color.images}
+          basePath={imageBasePath}
+          alt={`${color.name.toLowerCase()} ${fiber.name.toLowerCase()} rope for rope bondage`}
+        />
+      </div>
+
+      <div style="flex:1; min-width:280px;">
+        <KitButtons
+          fiberName={fiber.name}
+          fiberSlug={fiber.slug}
+          colorName={color.name}
+          colorSlug={color.slug}
+          pricePerFoot={fiber.pricePerFoot}
+        />
+
+        <div style="clear:both;"></div>
+
+        <RopeCustomForm
+          fiberName={fiber.name}
+          fiberSlug={fiber.slug}
+          colorName={color.name}
+          colorSlug={color.slug}
+          pricePerFoot={fiber.pricePerFoot}
+          weightPerFoot={fiber.weightPerFoot}
+          diameter={fiber.diameter}
+        />
+      </div>
+    </div>
+
+    <div style="clear:both;"></div>
+
+    <br /><br />
+
+    <div id="desc_box" class="card" style="margin-top:20px;">
+      <h4>About the rope:</h4>
+      <p><b>{fiber.name}:</b> {fiber.fiberDescription}</p>
+      <br />
+      <h4>About the color:</h4>
+      <p><b>{color.name}:</b> {color.colorDescription || `${color.name} rope, hand treated and dyed to provide the optimum look and feel.`}</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline src="/scripts/rope-builder.js"></script>

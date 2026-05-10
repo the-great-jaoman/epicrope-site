@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductListItem from '../../components/ProductListItem.astro';
+import { equipment } from '../../data/equipment';
+---
+
+<BaseLayout
+  title="Rope Bondage Equipment - Rigging Plates, Shibari Suspension Rings, Kinbaku Carabiners"
+  description="We provide the best rope bondage equipment on the net, giving you the tools you need to make your Shibari suspension as simple as they can be."
+>
+  <div id="buy_equipment" class="container_16">
+    <h1>Equipment</h1>
+    {equipment.map(item => (
+      <ProductListItem
+        name={item.name}
+        href={`/equipment/${item.slug}`}
+        imageSrc={item.listImage}
+        description={item.description.substring(0, 200) + '...'}
+        price={`$${item.price}`}
+      />
+    ))}
+  </div>
+</BaseLayout>

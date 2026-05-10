@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductListItem from '../../components/ProductListItem.astro';
+import { books } from '../../data/books';
+---
+
+<BaseLayout
+  title="Shibari Educational Books and DVDs"
+  description="EpicRope.com is dedicated to providing you with educational resources. Our selection includes Douglas Kent's Complete Shibari: Land & Sky."
+>
+  <div id="buy_equipment" class="container_16">
+    <h1>Books & DVDs</h1>
+    {books.map(item => (
+      <ProductListItem
+        name={item.name}
+        href={`/books/${item.slug}`}
+        imageSrc={item.listImage}
+        description={item.description.substring(0, 200) + '...'}
+        price={`$${item.price}`}
+      />
+    ))}
+  </div>
+</BaseLayout>

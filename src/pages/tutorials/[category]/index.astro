@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import TutorialCard from '../../../components/TutorialCard.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import { tutorialCategories } from '../../../data/tutorials';
+
+export async function getStaticPaths() {
+  return tutorialCategories.map(cat => ({
+    params: { category: cat.slug },
+    props: { category: cat },
+  }));
+}
+
+const { category } = Astro.props;
+const canonical = `https://epicrope.com/tutorials/${category.slug}`;
+---
+
+<BaseLayout title={`${category.name} - Rope Bondage Tutorials`} canonical={canonical}>
+  <Breadcrumbs crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Tutorials', href: '/tutorials' },
+    { label: category.name, href: `/tutorials/${category.slug}` },
+  ]} />
+
+  <div id="tutorials_content" style="display:flex; flex-wrap:wrap; gap:30px;">
+    <div id="tutorial_list" style="flex:1; min-width:300px;">
+      {category.subcategories.map(sub => (
+        <div class="tutorial_selection" style="margin-bottom:25px;">
+          <h3>{sub.name}</h3>
+          <div class="tutorial_link_container">
+            {sub.tutorials.filter(t => t.image).map(tutorial => (
+              <TutorialCard
+                title={tutorial.title}
+                href={`/tutorials/${category.slug}/${sub.slug}/${tutorial.slug}`}
+                imageSrc={tutorial.image}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div id="tutorial_categories" style="flex:0 0 200px;">
+      <h2>Categories</h2>
+      <ul style="list-style:none; padding:0;">
+        {tutorialCategories.map(cat => (
+          <li style="margin-bottom:8px;">
+            <a
+              href={`/tutorials/${cat.slug}`}
+              style={cat.slug === category.slug ? 'color:red; font-weight:bold;' : ''}
+            >{cat.name}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</BaseLayout>

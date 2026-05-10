@@ -1,0 +1,16 @@
+---
+export interface Props {
+  crumbs: { label: string; href: string }[];
+}
+const { crumbs } = Astro.props;
+---
+
+<div id="return_path" class="container_12" style="margin-bottom:15px;">
+  {
+    crumbs.map((crumb, i) => (
+      i < crumbs.length - 1
+        ? <><a href={crumb.href}><span class="return_path_links">{crumb.label}</span></a> | </>
+        : <span>{crumb.label}</span>
+    ))
+  }
+</div>

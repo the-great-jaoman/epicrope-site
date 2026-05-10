@@ -1,0 +1,20 @@
+---
+import { site } from '../data/site';
+
+export interface Props {
+  name: string;
+  price: number;
+  weight: number;
+  imageUrl: string;
+}
+const { name, price, weight, imageUrl } = Astro.props;
+---
+
+<form action={`https://${site.foxyCartDomain}/cart`} method="post" accept-charset="utf-8">
+  <input type="hidden" name="price" value={price} />
+  <input type="hidden" name="weight" value={weight} />
+  <input type="hidden" name="name" value={name} />
+  <input type="hidden" name="image" value={imageUrl} />
+  <input class="button" type="submit" name="Add to Cart" value="Add to Cart"
+    style="padding:5px 20px; border:1px solid #ccc; background:#f5f5f5; cursor:pointer; font-weight:bold; margin-top:10px;" />
+</form>

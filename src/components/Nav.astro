@@ -1,0 +1,61 @@
+---
+const currentPath = Astro.url.pathname;
+
+function isActive(path: string) {
+  return currentPath === path || currentPath.startsWith(path + '/') ? 'current' : '';
+}
+---
+
+<style>
+  .mobile-nav-toggle { display: none; }
+  #templatemo_menu ul { float: left; width: 700px; margin: 0; padding: 0; list-style: none; }
+  #templatemo_menu ul li { padding: 0; margin: 0; display: inline; position: relative; }
+  #templatemo_menu ul li a {
+    display: block; padding: 0 15px 5px; margin: 0 5px 0 0;
+    font-size: 14px; text-decoration: none; color: #383838;
+    font-weight: normal; outline: none; border: none; float: left;
+  }
+  #templatemo_menu ul li a:hover, #templatemo_menu ul li a.current { color: red; font-weight: bold; }
+  #templatemo_menu ul li ul { display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #ccc; z-index: 100; width: 180px; }
+  #templatemo_menu ul li:hover ul { display: block; }
+  #templatemo_menu ul li ul li { display: block; }
+  #templatemo_menu ul li ul li a { float: none; padding: 5px 15px; font-size: 13px; }
+  .mobile-menu-btn { display: none; cursor: pointer; padding: 10px 15px; font-size: 24px; color: #383838; }
+
+  @media (max-width: 768px) {
+    .mobile-menu-btn { display: block; }
+    #templatemo_menu ul { display: none; float: none; width: 100%; }
+    #templatemo_menu ul.open { display: block; }
+    #templatemo_menu ul li { display: block; }
+    #templatemo_menu ul li a { float: none; padding: 10px 15px; border-bottom: 1px solid #eee; }
+    #templatemo_menu ul li ul { position: static; display: none; width: 100%; border: none; }
+    #templatemo_menu ul li ul.open { display: block; }
+    #templatemo_menu ul li ul li a { padding-left: 30px; }
+  }
+</style>
+
+<div class="mobile-menu-btn" onclick="this.nextElementSibling.classList.toggle('open')">&#9776;</div>
+
+<ul>
+  <li><a href="/" class={isActive('/') === 'current' && currentPath === '/' ? 'current' : ''}>Home</a></li>
+  <li>
+    <a href="/rope" class={isActive('/rope') || isActive('/rainbow_rope') || isActive('/equipment') || isActive('/books') ? 'current' : ''}>Shop</a>
+    <ul>
+      <li><a href="/rope" class={isActive('/rope')}>Rope</a></li>
+      <li><a href="/rainbow_rope" class={isActive('/rainbow_rope')}>Rainbow Rope</a></li>
+      <li><a href="/equipment" class={isActive('/equipment')}>Equipment</a></li>
+      <li><a href="/books" class={isActive('/books')}>Books & DVDs</a></li>
+    </ul>
+  </li>
+  <li><a href="/tutorials" class={isActive('/tutorials')}>Tutorials</a></li>
+  <li>
+    <a href="/faqs" class={isActive('/faqs')}>FAQs</a>
+    <ul>
+      <li><a href="/faqs" class={isActive('/faqs')}>FAQs</a></li>
+      <li><a href="/beginner_rope_buying_guide" class={isActive('/beginner_rope_buying_guide')}>Beginner's Rope Buying Guide</a></li>
+      <li><a href="/bulk_discounts" class={isActive('/bulk_discounts')}>Bulk Discounts</a></li>
+    </ul>
+  </li>
+  <li><a href="/contact" class={isActive('/contact')}>Contact</a></li>
+  <li><a href="https://epicrope.foxycart.com/cart?cart=view">Cart</a></li>
+</ul>

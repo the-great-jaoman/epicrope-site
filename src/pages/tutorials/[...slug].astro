@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { tutorialCategories } from '../../data/tutorials';
+
+interface TutorialMatch {
+  tutorial: any;
+  category: any;
+  subcategory: any;
+}
+
+export async function getStaticPaths() {
+  const paths: { params: { slug: string }; props: TutorialMatch }[] = [];
+  for (const cat of tutorialCategories) {
+    for (const sub of cat.subcategories) {
+      for (const t of sub.tutorials) {
+        if (!t.youtubeEmbedUrl) continue;
+        paths.push({
+          params: { slug: `${cat.slug}/${sub.slug}/${t.slug}` },
+          props: { tutorial: t, category: cat, subcategory: sub },
+        });
+      }
+    }
+  }
+  return paths;
+}
+
+const { tutorial, category, subcategory } = Astro.props;
+const canonical = `https://epicrope.com/tutorials/${category.slug}/${subcategory.slug}/${tutorial.slug}`;
+---
+
+<BaseLayout title={`${tutorial.title} - Rope Bondage Tutorials`} canonical={canonical}>
+  <Breadcrumbs crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Tutorials', href: '/tutorials' },
+    { label: category.name, href: `/tutorials/${category.slug}` },
+    { label: tutorial.title, href: `/tutorials/${category.slug}/${subcategory.slug}/${tutorial.slug}` },
+  ]} />
+
+  <div id="tutorial">
+    <h1>{tutorial.title}</h1>
+
+    <div id="video" style="text-align:center; margin:20px 0;">
+      <iframe width="600" height="400" src={tutorial.youtubeEmbedUrl} frameborder="0" allowfullscreen style="max-width:100%;"></iframe>
+    </div>
+
+    {tutorial.author && (
+      <div id="author" style="margin:20px 0; text-align:center;">
+        <p><b>{tutorial.author}:</b> {tutorial.authorBio}
+        {tutorial.authorUrl && <> For more information check out <a href={tutorial.authorUrl} target="_blank">{tutorial.authorUrl.replace('http://', '')}</a>.</>}
+        </p>
+      </div>
+    )}
+  </div>
+</BaseLayout>

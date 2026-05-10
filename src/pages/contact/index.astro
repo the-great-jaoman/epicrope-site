@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch with EpicRope. We'd love to hear from you."
+>
+  <div class="col_w960 float_l">
+    <div id="contact_container">
+      <div id="contact_form">
+        <h2>Contact Us</h2>
+        <form method="post" name="contact" action="/contact/index.php">
+          <label for="author">Name:</label>
+          <input name="name" type="text" class="input_field" id="author" maxlength="60" style="width:270px; padding:5px; border:1px solid #ccc; margin-bottom:10px;" />
+          <div class="cleaner_h10"></div>
+
+          <label for="email">Email:</label>
+          <input name="email" type="text" class="input_field" id="email" maxlength="60" style="width:270px; padding:5px; border:1px solid #ccc; margin-bottom:10px;" />
+          <div class="cleaner_h10"></div>
+
+          <label for="subject">Subject:</label>
+          <input name="subject" type="text" class="input_field" id="subject" maxlength="60" style="width:270px; padding:5px; border:1px solid #ccc; margin-bottom:10px;" />
+          <div class="cleaner_h10"></div>
+
+          <label for="text">Message:</label>
+          <textarea id="text" name="message" rows="10" cols="0" class="required" style="width:388px; height:200px; padding:5px; border:1px solid #ccc; margin-bottom:10px;"></textarea>
+          <div class="cleaner_h10"></div>
+
+          <input type="submit" class="submit_btn float_l" name="submit" id="submit" value="Send" style="padding:5px 14px; border:1px solid #ccc; background:#fff; cursor:pointer;" />
+        </form>
+      </div>
+    </div>
+    <div class="cleaner"></div>
+  </div>
+</BaseLayout>

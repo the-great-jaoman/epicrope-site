@@ -1,0 +1,76 @@
+---
+import { site } from '../data/site';
+
+export interface Props {
+  fiberName: string;
+  fiberSlug: string;
+  colorName: string;
+  colorSlug: string;
+  pricePerFoot: number;
+  weightPerFoot: number;
+  diameter: string;
+}
+
+const { fiberName, fiberSlug, colorName, colorSlug, pricePerFoot, weightPerFoot, diameter } = Astro.props;
+const imageUrl = `https://${site.url}/rope/${fiberSlug}/${colorSlug}/img/main.png`;
+const type = `${colorName.toLowerCase()} ${fiberName.toLowerCase()}`;
+---
+
+<form action={`https://${site.foxyCartDomain}/cart`} method="post" accept-charset="utf-8">
+  <fieldset id="add_custom_rope" class="double_border" style="border:1px solid #ccc; padding:15px;">
+    <legend style="font-weight:bold; padding:0 10px;">
+      <b>Add Custom Rope - ${pricePerFoot}/ft./${(pricePerFoot * 3.28).toFixed(2)}/m.</b>
+    </legend>
+
+    <div id="custom_rope_top" style="display:flex; flex-wrap:wrap; gap:10px;">
+      <div class="custom_field">
+        <label style="display:block; font-weight:bold;">Length</label>
+        <select name="length" id="length" style="padding:3px;">
+          {Array.from({length: 24}, (_, i) => (i + 1) * 5).map(v => (
+            <option value={v} selected={v === 30}>{v}</option>
+          ))}
+        </select>
+      </div>
+
+      <div class="custom_field">
+        <label style="display:block; font-weight:bold;">UOM</label>
+        <select name="Unit" id="uom" style="padding:3px;">
+          <option value="ft">feet</option>
+          <option value="m">meters</option>
+        </select>
+      </div>
+
+      <input type="hidden" name="name" id="custom_name" value="Custom Rope Length" />
+      <input type="hidden" name="price" price_per_foot={pricePerFoot} id="custom_price" value={pricePerFoot * 30} />
+      <input type="hidden" name="categry" value="Custom Rope" />
+      <input type="hidden" name="weight" weight_per_foot={weightPerFoot} id="custom_weight" value={weightPerFoot * 30} />
+      <input type="hidden" name="type" value={type} />
+      <input type="hidden" name="image" value={imageUrl} />
+
+      <div class="custom_field">
+        <label style="display:block; font-weight:bold;">Diameter</label>
+        <select name="diameter" style="padding:3px;">
+          <option value={diameter}>{diameter}</option>
+        </select>
+      </div>
+
+      <div class="custom_field">
+        <label style="display:block; font-weight:bold;">Quantity</label>
+        <select name="quantity" id="quantity" style="padding:3px;">
+          {Array.from({length: 39}, (_, i) => i + 1).map(v => (
+            <option value={v} selected={v === 1}>{v}</option>
+          ))}
+        </select>
+      </div>
+    </div>
+
+    <div style="clear:both;"></div>
+
+    <div id="custom_rope_bottom" style="margin-top:10px;">
+      <div id="add_set_button">
+        <input id="add_set" class="border" type="submit" value="Add"
+          style="padding:5px 20px; border:1px solid #ccc; background:#f5f5f5; cursor:pointer; font-weight:bold;" />
+      </div>
+    </div>
+  </fieldset>
+</form>
