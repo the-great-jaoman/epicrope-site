@@ -15,6 +15,7 @@ const pageTitle = title ? `${title} | EpicRope` : "Premium Shibari & Kinbaku Bon
 const pageDesc = description || "We sell high quality bondage shibari and kinbaku rope and equipment. Our rope comes in a wide array of colors.";
 const pageCanonical = canonical || site.url;
 
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const gaId = site.gaTrackingId;
 const adsId = site.googleAdsId;
 const saleCode = site.sale.code;
@@ -83,7 +84,7 @@ function addCoupon() {
   <title>{pageTitle}</title>
   <meta name="description" content={pageDesc} />
   <link rel="canonical" href={pageCanonical} />
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href={`${baseUrl}favicon.ico`} />
 
   <script is:inline data-cfasync="false" src="https://cdn.foxycart.com/epicrope/loader.js" async defer></script>
 
@@ -98,7 +99,7 @@ function addCoupon() {
 <body>
   <div id="templatemo_wrapper">
     <div id="templatemo_header">
-      <div id="site_title"><h1><a href="/">Epic Rope</a></h1></div>
+      <div id="site_title"><h1><a href={baseUrl}>Epic Rope</a></h1></div>
       <div id="header_right"></div>
       <div class="cleaner"></div>
     </div>

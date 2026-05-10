@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 
 <BaseLayout
@@ -7,7 +8,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   description="We sell high quality bondage shibari and kinbaku rope and equipment. Our rope comes in a wide array of colors. We take pride in our competitive prices and excellent customer service."
 >
   <div id="slider">
-    <a href="/"><img src="/images/logo_try_II.png" alt="Welcome to EpicRope!" style="width:100%;" /></a>
+    <a href="/"><img src={`${base}images/logo_try_II.png`} alt="Welcome to EpicRope!" style="width:100%;" /></a>
   </div>
 
   <div id="home_content" class="col_w960">
@@ -16,42 +17,42 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <div class="feature_button lp_box">
         <a href="/rope">
-          <img src="/img/scarlet_home_icon.png" class="image_wrapper" alt="Japanese Jute! Now in color!" style="width:290px;" />
+          <img src={`${base}img/scarlet_home_icon.png`} class="image_wrapper" alt="Japanese Jute! Now in color!" style="width:290px;" />
           <div class="feature-stripe"><h1 style="font-size:28px; margin:0;">Shibari Jute, now in color!</h1></div>
         </a>
       </div>
 
       <div class="feature_button lp_box">
         <a href="/rope/shibari_jute/natural">
-          <img src="/img/osada_jute.png" class="image_wrapper" alt="New! EpicRope.com is now proudly a supplier of Japanese Jute!" style="width:290px;" />
+          <img src={`${base}img/osada_jute.png`} class="image_wrapper" alt="New! EpicRope.com is now proudly a supplier of Japanese Jute!" style="width:290px;" />
           <div class="feature-stripe"><h1 style="font-size:24px; margin:0;">EpicRope.com is now a proud supplier of Shibari Jute!</h1></div>
         </a>
       </div>
 
       <div class="feature_button lp_box">
         <a href="/rainbow_rope/">
-          <img src="/img/rainbow.png" class="image_wrapper" alt="Check out our Rainbow Rope!" style="width:290px;" />
+          <img src={`${base}img/rainbow.png`} class="image_wrapper" alt="Check out our Rainbow Rope!" style="width:290px;" />
           <div class="feature-stripe"><h1 style="font-size:28px; margin:0;">Check out our Rainbow Rope!</h1></div>
         </a>
       </div>
 
       <div class="feature_button lp_box">
         <a href="/rope/">
-          <img src="/img/rope_black.png" class="image_wrapper" alt="Shop for bondage rope" style="width:290px;" />
+          <img src={`${base}img/rope_black.png`} class="image_wrapper" alt="Shop for bondage rope" style="width:290px;" />
           <div class="feature-stripe"><h1 style="font-size:28px; margin:0;">Check out our awesome Shibari rope!</h1></div>
         </a>
       </div>
 
       <div class="feature_button lp_box">
         <a href="/equipment">
-          <img src="/img/equipment_black.png" class="image_wrapper" alt="Shop for rope suspension equipment" style="width:290px;" />
+          <img src={`${base}img/equipment_black.png`} class="image_wrapper" alt="Shop for rope suspension equipment" style="width:290px;" />
           <div class="feature-stripe"><h1 style="font-size:28px; margin:0;">We have great gear, too!</h1></div>
         </a>
       </div>
 
       <div class="feature_button lp_box">
         <a href="/books/">
-          <img src="/img/books_black.png" class="image_wrapper" alt="Shop for rope bondage books and DVDs" style="width:290px;" />
+          <img src={`${base}img/books_black.png`} class="image_wrapper" alt="Shop for rope bondage books and DVDs" style="width:290px;" />
           <div class="feature-stripe"><h1 style="font-size:28px; margin:0;">Learning Books and DVDs!</h1></div>
         </a>
       </div>
@@ -75,10 +76,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p><b>Our Shop</b></p>
         <p>We offer you&hellip;</p>
         <ul>
-          <li>The highest quality <a href="/rope/">Shibari bondage rope</a>, hand treated and dyed to provide the optimum look and feel.</li>
-          <li>Choose from <a href="/rope/jute/scarlet">jute bondage rope</a>, <a href="/rope/hemp/natural">hemp bondage rope</a>, or <a href="/rope/shibari_jute/natural">premium Japanese jute rope</a>.</li>
-          <li>Our rope bondage suspension gear is first rate.</li>
-          <li>For those just starting out, we offer excellent Shibari educational books.</li>
+          <li>The highest quality <a href="/rope/">Shibari bondage rope</a>, hand treated and dyed to provide the optimum look and feel as it glides across the body. Its texture will stimulate the passion of Kinbaku. Its shine will inspire creativity in your bondage photography and make your performance bondage stand out. And don't forget lighthearted fun &ndash; it's all about the fun, after all.</li>
+          <li>Choose from <a href="/rope/jute/scarlet">jute bondage rope</a>, <a href="/rope/hemp/natural">hemp bondage rope</a>, or <a href="/rope/shibari_jute/natural">premium Japanese jute rope</a>, natural or in a wide range of colors.</li>
+          <li>Our rope bondage suspension gear is first rate. As with our rope, we seek to offer you a wide selection of colors and options, to best customize your artistic vision and rigging needs.</li>
+          <li>For those just starting out, we offer excellent Shibari educational books, so that you can tie like the masters in no time.</li>
         </ul>
       </div>
 

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { fibers } from '../../data/ropes';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 
 <BaseLayout
@@ -22,7 +23,7 @@ import { fibers } from '../../data/ropes';
                 {fiber.colors.map(color => (
                   <div class="rope_image_box image-hidden" id={`${fiber.slug}-${color.slug}`} style={{display: color.slug === fiber.colors[0].slug ? 'block' : 'none'}}>
                     <a href={`/rope/${fiber.slug}/${color.slug}`}>
-                      <img src={`/rope/${fiber.slug}/${color.slug}/img/main.png`} alt={`Buy ${color.name} rope for rope bondage`} style="width:270px; height:300px; border:1px solid #ccc; padding:4px;" />
+                      <img src={`${base}rope/${fiber.slug}/${color.slug}/img/main.png`} alt={`Buy ${color.name} rope for rope bondage`} style="width:270px; height:300px; border:1px solid #ccc; padding:4px;" />
                     </a>
                     <div class="color_name" style="margin-top:5px;">
                       <p><b>{color.name}</b></p>
@@ -40,7 +41,7 @@ import { fibers } from '../../data/ropes';
                     <div class="swatch_box" style="text-align:center; width:70px; font-size:11px; cursor:pointer;">
                       {color.name}
                       <div class="swatch" fiber={`.${fiber.slug}`} name={`#${fiber.slug}-${color.slug}`} style={{border: color.slug === fiber.colors[0].slug ? '2px solid #444' : '2px solid transparent', display:'inline-block'}}>
-                        <img src={`/rope/${fiber.slug}/${color.slug}/img/thumbnail.png`} alt={`Thumbnail for ${color.name} rope`} style="width:40px; height:40px;" />
+                        <img src={`${base}rope/${fiber.slug}/${color.slug}/img/thumbnail.png`} alt={`Thumbnail for ${color.name} rope`} style="width:40px; height:40px;" />
                       </div>
                     </div>
                   ))}

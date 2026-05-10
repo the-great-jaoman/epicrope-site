@@ -111,7 +111,44 @@ File created at `public/contact/index.php` with a basic PHP `mail()` implementat
 - [ ] Test form submission end-to-end
 - [ ] Alternatively, replace with your preferred form handler/service
 
-## 9. FoxyCart Integration — DOUBLE CHECK
+## 9. FoxyCart & GA — Connect Clone to Its Own Accounts
+
+The clone currently uses the **real epicrope.com** FoxyCart store domain and Google Analytics tracking IDs.
+
+### FoxyCart
+- **Cart link**: Points to `https://epicrope.foxycart.com/cart?cart=view` in `src/components/Nav.astro`
+- **Loader script**: Loads from `https://cdn.foxycart.com/epicrope/loader.js` in `src/layouts/BaseLayout.astro`
+- **Form actions**: Point to `https://epicrope.foxycart.com/cart` in `RopeCustomForm.astro`, `KitButtons.astro`, `SimpleAddToCart.astro`
+- **Image URLs**: Sent to FoxyCart as product images; currently use `site.url` (clone domain after fix) or hardcoded `https://epicrope.com`
+
+**To make FoxyCart work for the clone:**
+- [ ] Create a separate FoxyCart subdomain for testing (e.g., `epicrope-test.foxycart.com`)
+- [ ] Update `site.foxyCartDomain` in `src/data/site.ts` to the test subdomain
+- [ ] Update the loader script URL in `src/layouts/BaseLayout.astro`
+- [ ] Verify image URLs sent to FoxyCart are publicly accessible
+
+**To keep pointing to the real store (current behavior):**
+- [ ] Test that adding items to cart from the clone correctly submits to `epicrope.foxycart.com`
+- [ ] Verify the cart popup loads and displays correctly
+- [ ] Ensure image URLs sent to FoxyCart use `https://epicrope.com` (not the clone domain) — if images fail, revert `imageUrl` in `RopeCustomForm.astro` and `KitButtons.astro` to hardcode `https://epicrope.com`
+
+### Google Analytics / Ads
+- **GA4 ID**: `G-3GVCSPDFEQ` (real EpicRope property)
+- **Google Ads ID**: `AW-867060290` (real EpicRope property)
+- Configured in `src/data/site.ts` and loaded in `src/layouts/BaseLayout.astro`
+
+**To make GA work for the clone:**
+- [ ] Create separate GA4 and Google Ads properties for the clone domain
+- [ ] Update `gaTrackingId` and `googleAdsId` in `src/data/site.ts`
+- [ ] Test that pageviews appear in the correct property
+
+**To keep pointing to real accounts (current behavior):**
+- [ ] Accept that clone traffic will pollute real analytics
+- [ ] Or add domain checking to conditionally load GA only on `epicrope.com`
+
+---
+
+## 10. FoxyCart Integration — DOUBLE CHECK
 Verify all add-to-cart flows work correctly:
 - [ ] **Kit buttons**: Click a kit button → FoxyCart cart opens with correct items, prices, quantities
 - [ ] **Custom rope form**: Submit → correct price, weight, name appear in cart

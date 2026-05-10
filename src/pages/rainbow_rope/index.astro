@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 
 <BaseLayout
@@ -16,7 +17,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <div class="product_image_box hemp">
             <div class="rope_image_box visible">
               <a href="/hemp/rainbow_rope">
-                <img src="/rainbow_rope/hemp/img/main.png" alt="Buy rainbow hemp for rope bondage" style="width:270px; height:300px; border:1px solid #ccc; padding:4px;" />
+                <img src={`${base}rainbow_rope/hemp/img/main.png`} alt="Buy rainbow hemp for rope bondage" style="width:270px; height:300px; border:1px solid #ccc; padding:4px;" />
               </a>
               <div class="color_name" style="margin-top:5px;">
                 <p><b>Rainbow Hemp</b></p>
@@ -36,7 +37,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <div class="product_image_box jute">
             <div class="rope_image_box visible">
               <a href="/jute/rainbow_rope">
-                <img src="/rainbow_rope/jute/img/main.png" alt="Buy rainbow jute for rope bondage" style="width:270px; height:300px; border:1px solid #ccc; padding:4px;" />
+                <img src={`${base}rainbow_rope/jute/img/main.png`} alt="Buy rainbow jute for rope bondage" style="width:270px; height:300px; border:1px solid #ccc; padding:4px;" />
               </a>
               <div class="color_name" style="margin-top:5px;">
                 <p><b>Rainbow Jute</b></p>

@@ -7,12 +7,13 @@ export interface Props {
   price: string;
 }
 const { name, href, imageSrc, description, price } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 
 <a href={href} style="text-decoration:none; color:inherit;">
   <div style="display:flex; margin-bottom:20px; border:1px solid #eee; padding:10px; border-radius:8px; box-shadow:3px 3px 3px #556;">
     <div style="flex:0 0 180px; margin-right:20px;">
-      <img src={imageSrc} style="width:180px; height:180px; border:1px solid #ccc; padding:4px;" alt={name} />
+      <img src={`${base}${imageSrc.replace(/^\//, '')}`} style="width:180px; height:180px; border:1px solid #ccc; padding:4px;" alt={name} />
     </div>
     <div style="flex:1;">
       <h3 style="margin:0 0 10px; color:red;">{name}</h3>

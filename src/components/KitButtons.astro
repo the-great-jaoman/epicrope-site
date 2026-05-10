@@ -14,7 +14,7 @@ const { fiberName, fiberSlug, colorName, colorSlug, pricePerFoot } = Astro.props
 
 function kitUrl(kit: Kit): string {
   const base = `https://${site.foxyCartDomain}/cart?`;
-  const imageUrl = `https://${site.url}/rope/${fiberSlug}/${colorSlug}/img/main.png`;
+  const imageUrl = `${site.url}/rope/${fiberSlug}/${colorSlug}/img/main.png`;
   const type = `${colorName.toLowerCase()} ${fiberName.toLowerCase()}`;
   const params = kit.items.map((item, idx) => {
     const n = idx + 1;

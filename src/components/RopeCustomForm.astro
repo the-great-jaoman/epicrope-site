@@ -12,7 +12,7 @@ export interface Props {
 }
 
 const { fiberName, fiberSlug, colorName, colorSlug, pricePerFoot, weightPerFoot, diameter } = Astro.props;
-const imageUrl = `https://${site.url}/rope/${fiberSlug}/${colorSlug}/img/main.png`;
+const imageUrl = `${site.url}/rope/${fiberSlug}/${colorSlug}/img/main.png`;
 const type = `${colorName.toLowerCase()} ${fiberName.toLowerCase()}`;
 ---
 

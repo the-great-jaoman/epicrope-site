@@ -1,6 +1,6 @@
 export const site = {
   name: "Epic Rope",
-  url: "https://epicrope.com",
+  url: "https://the-great-jaoman.github.io/epicrope-site",
   foxyCartDomain: "epicrope.foxycart.com",
   gaTrackingId: "G-3GVCSPDFEQ",
   googleAdsId: "AW-867060290",

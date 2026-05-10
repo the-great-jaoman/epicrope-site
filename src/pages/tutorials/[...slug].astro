@@ -26,7 +26,8 @@ export async function getStaticPaths() {
 }
 
 const { tutorial, category, subcategory } = Astro.props;
-const canonical = `https://epicrope.com/tutorials/${category.slug}/${subcategory.slug}/${tutorial.slug}`;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const canonical = `${import.meta.env.SITE}${base}tutorials/${category.slug}/${subcategory.slug}/${tutorial.slug}`;
 ---
 
 <BaseLayout title={`${tutorial.title} - Rope Bondage Tutorials`} canonical={canonical}>
